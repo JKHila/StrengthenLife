@@ -1,0 +1,80 @@
+# =============== #
+
+# Unity generated #
+
+# =============== #
+
+Temp/
+
+Obj/
+
+UnityGenerated/
+
+Library/
+
+Library/metadata
+
+Plugins/
+PlayServicesResolver/
+Firebase/
+Editor Default Resources/
+
+Assets/VSCode
+VSCode.meta
+.vscode
+
+google-services.json
+SLifeKey.keystore
+
+
+
+# ===================================== #
+
+# Visual Studio / MonoDevelop generated #
+
+# ===================================== #
+
+ExportedObj/
+
+*.svd
+
+*.userprefs
+
+*.csproj
+
+*.pidb
+
+*.suo
+
+*.sln
+
+*.user
+
+*.unityproj
+
+*.booproj
+
+
+
+# ============ #
+
+# OS generated #
+
+# ============ #
+
+.DS_Store
+
+.DS_Store?
+
+._*
+
+.Spotlight-V100
+
+.Trashes
+
+Icon?
+
+ehthumbs.db
+
+Thumbs.db
+
