@@ -11,7 +11,6 @@ public class HireSoldier : MonoBehaviour {
 	int playerLevel = 10;
 	public GameObject soldierHirePanel;
 	Sprite[] sprites;
-	Sprite[] sprites2;
 	SoldierClass[] soldiers = new SoldierClass[4];
 	// Use this for initialization
 	void Start () {

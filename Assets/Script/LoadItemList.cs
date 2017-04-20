@@ -7,7 +7,15 @@ using Firebase.Unity.Editor;
 
 public class LoadItemList : MonoBehaviour
 {
-
+    private static LoadItemList instance;
+    public static LoadItemList getInstance{
+        get{
+            if(instance == null){
+                instance = FindObjectOfType<LoadItemList>() as LoadItemList;
+            }
+            return instance;
+        }
+    }
     // Use this for initialization
     void Start()
     {
@@ -58,11 +66,14 @@ public class LoadItemList : MonoBehaviour
                 {
                     print("Update DataBase");
                     PlayerPrefs.SetFloat("DataVersion", (float)serverVer);
-                    ReadItemList();
-                    ReadPersonNameList();
+                    ReadDB();
                 }
             }
         });
+    }
+    public void ReadDB(){
+        ReadItemList();
+        ReadPersonNameList();
     }
     ItemClass item;
     void ReadPersonNameList()
@@ -98,21 +109,27 @@ public class LoadItemList : MonoBehaviour
             }
             else if (task.IsCompleted)
             {
-                print("Read Database");
                 DataSnapshot snapshot = task.Result;
                 PlayerPrefs.SetInt("NumOfItem", System.Convert.ToInt32(snapshot.ChildrenCount));
                 for (int i = 0; i < snapshot.ChildrenCount; i++)
                 {
                     item = new ItemClass();
+                    item.code = snapshot.Child(i.ToString()).Child("CODE").Value.ToString();
+                    item.kind = snapshot.Child(i.ToString()).Child("KIND").Value.ToString();
                     item.rank = System.Convert.ToInt32(snapshot.Child(i.ToString()).Child("RANK").Value);
-                    item.attakPoint = System.Convert.ToInt32(snapshot.Child(i.ToString()).Child("ATTAK").Value);
                     item.name = snapshot.Child(i.ToString()).Child("NAME").Value.ToString();
+                    item.baseAttackPoint = System.Convert.ToInt64(snapshot.Child(i.ToString()).Child("ATTAK").Value);
+                    item.explain = snapshot.Child(i.ToString()).Child("EXPLAIN").Value.ToString();
+                    item.cost = System.Convert.ToInt64(snapshot.Child(i.ToString()).Child("COST").Value);
                     ItemList.itemList.Add(item);
 
+                    print(item.code+" "+item.name);
                     string jsonText = JsonUtility.ToJson(item);
                     PlayerPrefs.SetString("ItemList" + i, jsonText);
+                    //print(JsonUtility.FromJson<ItemClass>(PlayerPrefs.GetString("ItemList"+i)).name);
                     //Debug.Log(snapshot.Child(i.ToString()).Child("ATTAK").Value);
                 }
+                print("Success Read Database");
                 /*foreach (ItemClass key in ItemList.itemList)
                 {
                     Debug.Log(key.name + key.attakPoint + key.rank);
